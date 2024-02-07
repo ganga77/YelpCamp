@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate')%>
+    <h1><%=camp.title%></h1>
+    <h3><%=camp.location%></h3>
+    <img src="<%=camp.image%>" alt="image">
+    <h4>Price iss: $<%=camp.price %></h4>
+    
+    <h4>Submitted by: <%=camp.author.username%></h4>
+    
+    
+    <% if (currentUser && camp.author.equals(currentUser._id)) {%>
+    <a href="/campgrounds/<%=camp.id%>/edit">Edit this</a>
+    <form action="/campgrounds/<%=camp._id%>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+    </form>
+    <% } %>
+    <h2>Add a Rating!</h2>
+    <form action="/campgrounds/<%=camp._id%>/reviews" method="POST" class="mb-3" validated-form>
+        <div class="mb-3">
+            <label class="form-label" for="rating">Rating</label>
+            <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="body">Review</label>
+            <textarea class= "form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+        </div>
+        <div class="valid-feedback">
+            Looks Good
+        </div>
+        <button class="btn btn-success">Submit</button>
+    </form>
+    <h3>These are the reviews with Ratings:</h3>
+
+    <% for(let x of camp.reviews) { %>
+        <div class="card mb-3">
+            <h5 class="card-title">Rating: <%=x.rating%></h5>
+            <h5 class="card-text">Review: <%=x.body%></h5>
+
+            <h5 class="card-text">Submitted By: <%=x.author.username%></h5>
+            <% if(currentUser && (x.author.equals(currentUser._id))) {%>
+            <form action="/campgrounds/<%=camp._id%>/reviews/<%=x._id%>?_method=DELETE" method="POST">
+                <button>DELETE</button>
+            </form>
+            <% }%>
+        </div>
+
+    <% } %>
+
+    <footer>
+        <a href="/campgrounds">All Campgrounds</a>
+    </footer>

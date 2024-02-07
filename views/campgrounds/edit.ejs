@@ -1,0 +1,15 @@
+<% layout('layouts/boilerplate')%>
+    <h1>Edit</h1>
+    <form action="/campgrounds/<%=camp_id._id%>?_method=PUT" method="POST" class="validated-form" novalidate>
+        <label for="title">Enter title:</label>
+        <input type="text" id="title" placeholder="Title" name="title" required>
+        <br>
+        <label for="location">Enter location:</label>
+        <input type="text" id="location" placeholder="location" name="location" required>
+
+        <br>
+        <label for="price">Enter Price:</label>
+        <input type="price" id="price" placeholder="price" name="price" required>
+        <br>
+        <button>Submit</button>
+    </form>
